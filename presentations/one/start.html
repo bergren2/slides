@@ -1,0 +1,132 @@
+<!DOCTYPE html><html><head><title></title><meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" /><style type='text/css'>
+body {
+  font-family: 'Helvetica';
+  letter-spacing:-5px;
+  background:#000;
+  background-size:100%;
+  color:#fff;
+  margin:0;
+  padding:0;
+  font-weight:bold;
+}
+
+h1, h2, h3, p {
+  margin:0;
+}
+
+em, a {
+  font-style:normal;
+  color:#8dbd0c;
+}
+
+a {
+  background: #34d0e7;
+  color:#000;
+  text-decoration:none;
+}
+
+img {
+  width:100%;
+}
+
+div {
+  cursor:pointer;
+  cursor:hand;
+  position:absolute;
+  top:0;
+  left:0;
+}
+</style><script type='text/javascript'>
+window.onload = function() {
+    var s = document.getElementsByTagName('div'), cur = 0;
+    if (!s) return;
+    function go(n) {
+        cur = n;
+        var i = 1e3, e = s[n];
+        for (var k = 0; k < s.length; k++) s[k].style.display = 'none';
+        e.style.display = 'inline';
+        e.style.fontSize = i + 'px';
+        if (e.firstChild.nodeName === 'IMG') {
+            document.body.style.backgroundImage = 'url(' + e.firstChild.src + ')';
+            e.firstChild.style.display = 'none';
+        } else {
+            document.body.style.backgroundImage = '';
+            document.body.style.backgroundColor = e.style.backgroundColor;
+        }
+        while (
+            e.offsetWidth > window.innerWidth ||
+            e.offsetHeight > window.innerHeight) {
+            e.style.fontSize = (i -= 10) + 'px';
+            if (i < 0) break;
+        }
+        e.style.marginTop = ((window.innerHeight - e.offsetHeight) / 2) + 'px';
+        if (window.location.hash !== n) window.location.hash = n;
+        document.title = e.textContent || e.innerText;
+    }
+    document.onclick = function() {
+        go(++cur % (s.length));
+    };
+    document.onkeydown = function(e) {
+        (e.which === 39) && go(Math.min(s.length - 1, ++cur));
+        (e.which === 37) && go(Math.max(0, --cur));
+    };
+    function parse_hash() {
+        return Math.max(Math.min(
+            s.length - 1,
+            parseInt(window.location.hash.substring(1), 10)), 0);
+    }
+    if (window.location.hash) cur = parse_hash() || cur;
+    window.onhashchange = function() {
+        var c = parse_hash();
+        if (c !== cur) go(c);
+    };
+
+    go(cur);
+};
+</script></head><body>
+
+<div>Data-Driven Design w/ <em>Google Analytics</em> and <em>Segment.io</em><br /><br />A presentation by<br />Dan Bergren</div>
+<div>First, what does it mean to be <em>data-driven</em>?</div>
+<div>To be <em>data-driven</em> you must:<ol><li>1. Record data</li><li>&nbsp;</li><li>&nbsp;</li></ol></div>
+<div>To be <em>data-driven</em> you must:<ol><li>1. Record data</li><li>2. Interpret data</li><li>&nbsp;</li></ol></div>
+<div>To be <em>data-driven</em> you must:<ol><li>1. Record data</li><li>2. Interpret data</li><li>3. Rinse &amp; repeat!</li></ol></div>
+<div>This makes sense...<br /><br />but many people only do Step 1: <em>record data</em>.<br />This is because...</div>
+<div style="color: black"><img src="3.png" alt="" /><br /><br /><br />recording data has become super easy</div>
+<div style="color: black"><img src="1.png" alt="" /><br /><br /><br />and interpreting data is still hard</div>
+<div style="color: black"><img src="4.png" alt="" />since charts are pretty<br /><br /><br /><br /><br /><br /></div>
+<div style="color: black"><img src="2.png" alt="" />especially if you don't know what they mean right away<br /><br /><br /><br /><br /><br /></div>
+<div>The goal of this talk to is explore what Google Analytics is <em>good</em> at out-of-the-box</div>
+<div>and how that relates to <em>good data-driven design</em>.</div>
+<div>Also we'll talk about <em>Segment.io</em> and why it's <em>really cool</em>.</div>
+
+<div>Part I:<br /><em>Standard Reports</em></div>
+<div>There are 5 basic reports Google Analytics uses out of the box:<ol><li>1. Real-Time</li><li>2. Audience</li><li>3. Acquisition</li><li>4. Behavior</li><li>5. Conversions</li></ol></div>
+<div><img src="5.png" alt="" /></div>
+<div><em>Real-Time Reports</em> tell you... what's happening in real-time.<br /><br />They're great for testing your analytics, as far as I'm concerned.<br /><br />&nbsp;</div>
+<div><em>Real-Time Reports</em> tell you... what's happening in real-time.<br /><br />They're great for testing your analytics, as far as I'm concerned.<br /><br />Also I guess they're cool.</div>
+<div><img src="6.png" alt="" /></div>
+<div><em>Audience Reports</em> are for figuring out who uses your app.<br /><br />You should use them to flesh out who the actors are for your use cases, build out personas, etc.</div>
+<div><img src="7.png" alt="" /></div>
+<div><em>Acquisition Reports</em> are about how you get users to visit and return to your site.<br /><br />Right now we use this to track referrals, but it's also useful when you want to track results of an ad campaign or social media push.</div>
+<div><img src="8.png" alt="" /></div>
+<div>We use <em>Behavior Reports</em> to figure out how users use our site.<br /><br />This is what everyone gets giddy over. You can track specific actions (drilling, navigating, toggling, etc).</div>
+<div><img src="9.png" alt="" /></div>
+<div>Last but not least, <em>Conversion Reports</em>.<br /><br />A conversion is recorded when a user does an action you want. Then you can measure how effective you are at encouraging that action.</div>
+<div><img src="10.png" alt="" /></div>
+<div>Additionally, we can filter by:<ul><li><em>+</em> Timeframe</li><li><em>+</em> Customer Segment</li></ul></div>
+<div><img src="12.png" alt="" /></div>
+<div><img src="13.png" alt="" /></div>
+
+<div>Part II:<br /><em>Current State of Affairs</em></div>
+<div>Goals So Far:<ul><li><em>+</em> Get familiar with GA</li><li><em>+</em> Track more user actions</li><li><em>+</em> Figure out what questions we want answered</li></ul></div>
+<div>Down the Road:<ul><li><em>+</em> A/B Testing</li><li><em>+</em> Painless integration w/ acquisition campaigns</li><li><em>+</em> Use data to back-up design decisions</li></ul></div>
+
+<div>Part III:<br /><em>Segment.io</em></div>
+<div>Segment.io is a <em>common API</em> for web analytics.</div>
+<div>Segment.io Methods:<ul><li><em>+</em> Identify</li><li><em>+</em> Track</li><li><em>+</em> Pageview</li><li><em>+</em> Group</li><li><em>+</em> Alias</li></ul></div>
+<div>Segment.io Libraries:<br /><br />JavaScript<em>Ruby</em>Node.js<em>Python</em>PHP<em>Java</em>.NET<em>iOS</em>Android<br /><br />All of which are open-source.<br /><a href="https://github.com/segmentio">github.com/segmentio</a></div>
+<div>We can use Segment.io to easily send analytics data to many different tools <em>without rewriting code</em>.</div>
+<div><img src="11.png" alt="" /></div>
+
+<div>Questions?</div>
+<div>the end<br /><br />slides posted at <a href="http://bergren2.github.io/slides/">bergren2.github.io/slides</a></div>
